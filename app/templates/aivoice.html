@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
+    />
+    <title>음성 챗봇 체험</title>
+    <link rel="stylesheet" href="static/css/aivoice.css" />
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  </head>
+
+  <body>
+    <div id="aivoice-container">
+      <div id="top-bar">
+        <div id="top-message">캐릭터를 눌러 AI와 대화를 시작해보세요!</div>
+        <div class="nav-buttons">
+          <!-- 캐릭터 변경 버튼 이동 -->
+          <button id="change-character-btn" onclick="showCharacterSelection()">
+            캐릭터 변경
+          </button>
+          <button id="end-button">체험 종료</button>
+        </div>
+      </div>
+
+      <div id="chat-container">
+        <!-- 음성 입력 버튼 -->
+        <button id="voice-input">
+          <img
+            id="character-img"
+            src="static/images/character1.png"
+            alt="음성 입력"
+          />
+        </button>
+        <!-- 캐릭터 선택 UI -->
+        <div id="character-selection" class="fade-in">
+          <p>캐릭터를 선택하세요</p>
+          <div style="display: flex; gap: 20px">
+            <button onclick="selectCharacter(1)">
+              <img src="static/images/character1.png" alt="캐릭터 1" />
+            </button>
+            <button onclick="selectCharacter(2)">
+              <img src="static/images/character2.png" alt="캐릭터 2" />
+            </button>
+            <button onclick="selectCharacter(3)">
+              <img src="static/images/character3.png" alt="캐릭터 3" />
+            </button>
+          </div>
+        </div>
+
+        <div id="loading-message">
+          <span id="loading"></span>
+          <div id="load">대답을 생성중입니다.</div>
+        </div>
+      </div>
+    </div>
+
+    <script src="static/js/aivoice.js"></script>
+    <script src="static/js/height-fix.js"></script>
+  </body>
+</html>

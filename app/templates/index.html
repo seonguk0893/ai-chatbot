@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ko">
+ <head>
+  <meta charset="UTF-8" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
+  />
+  <title>나만의 AI 챗봇 만들기</title>
+
+  <!-- manifest + icon -->
+  <link rel="manifest" href="/manifest.json" />
+  <link rel="icon" type="image/png" sizes="192x192" href="/static/images/icons/icon-192.png" />
+  <link rel="apple-touch-icon" href="/static/images/icons/apple-touch-icon-152x152.png" />
+
+  <!-- styles -->
+  <link rel="stylesheet" href="/static/css/index.css" />
+
+  <!-- service worker 등록 -->
+  <script>
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", function () {
+        navigator.serviceWorker
+          .register("/service-worker.js")
+          .then((reg) => console.log("SW registered:", reg.scope))
+          .catch((err) => console.error("SW registration failed:", err));
+      });
+    }
+  </script>
+</head>
+
+  <body>
+    <div class="card">
+      <div class="text-section">
+        <div class="subtitle">오늘부터 당신이 연구소장!</div>
+        <div class="title">톡톡챗봇 연구소장님 반가워요 🎉</div>
+        <div class="description">
+          드디어 이 순간이 왔습니다.<br />
+          지금부터 당신은 <strong>톡톡챗봇 연구소의 소장</strong>이 되어<br />
+          세상에 하나뿐인 AI 챗봇을 직접 개발하게 됩니다.<br /><br />
+          챗봇의 이름은 무엇으로 할까요?<br />
+          어떤 대화를 나누고, 어떤 모습일까요?<br />
+          모두 당신의 상상력과 결정에 달렸습니다!<br /><br />
+          연구소 문을 열고 첫 실험을 시작해볼까요? 🔍🤖
+        </div>
+        <div class="start-section">
+          <input
+            type="text"
+            id="labName"
+            class="name-input"
+            placeholder="연구소장님의 이름을 지어주세요"
+          />
+          <button class="start-button" onclick="startExperiment()">
+            실험 시작하기
+          </button>
+        </div>
+      </div>
+      <div class="image-section">
+        <img src="static/images/chatrobot.png" alt="로봇 이미지" />
+      </div>
+    </div>
+    <div id="popup-overlay" class="popup-overlay"></div>
+    <div id="custom-popup" class="custom-popup">
+      <div class="popup-content">
+        <p id="popup-message"></p>
+      </div>
+    </div>
+    <script src="static/js/index.js"></script>
+    <script src="static/js/height-fix.js"></script>
+   
+  </body>
+</html>

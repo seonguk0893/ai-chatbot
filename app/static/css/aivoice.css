@@ -1,0 +1,329 @@
+/* Google Fonts */
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap");
+
+html,
+body {
+  height: calc(var(--vh, 1vh) * 100);
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+  touch-action: none; /* 모바일 터치 스크롤 방지 */
+}
+
+body {
+  font-family: "Noto Sans KR", serif;
+  background-color: #afe4f7;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  margin: 0;
+  overflow-x: hidden;
+  overflow: hidden;
+}
+
+#aivoice-container {
+  background-color: #afe4f7;
+}
+
+#top-bar {
+  position: absolute;
+  top: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  z-index: 10;
+}
+
+#top-bar {
+  position: absolute;
+  margin-top: 40px;
+  left: 0;
+  transform: translateY(-50%);
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 40px;
+  box-sizing: border-box;
+  z-index: 10;
+}
+
+#top-message {
+  flex: 1;
+  color: black;
+  font-size: 30px;
+  margin-left: 200px;
+  font-weight: bold;
+  text-align: center;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.nav-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+/* 기존 버튼 스타일 유지 */
+.nav-button {
+  background-color: #ffffff;
+  color: black;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 20px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.nav-button:hover {
+  background-color: #919191;
+}
+
+#chat-container {
+  width: 1205px;
+  height: 750px;
+  padding: 20px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+#loading-message {
+  display: none;
+  height: 26px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 250px;
+  background: rgba(0, 102, 204, 0.5);
+  border-radius: 10px;
+  margin: 200px 0 0 -125px;
+  padding: 2px;
+}
+#loading {
+  transition: all 500ms ease;
+  height: 20px;
+  width: calc(100% - 10px);
+  max-width: 243px;
+  border-radius: 8px;
+  position: absolute;
+  margin: 3px;
+  display: inline-block;
+  animation: load 15s ease infinite;
+  background: linear-gradient(
+    90deg,
+    #a5d8ff,
+    #8ecae6,
+    #b5bdfd,
+    #cdb4f7
+  ); /* 그라데이션 추가 */
+  background-size: 400% 100%; /* 그라데이션 애니메이션을 위한 크기 설정 */
+  animation: loadingBar 15s ease infinite;
+}
+
+#load {
+  font-family: "Noto Sans KR", serif;
+  font-weight: bold;
+  font-size: 24px;
+  text-align: center;
+  margin-top: -40px;
+  color: white;
+}
+
+@keyframes load {
+  0% {
+    width: 2%;
+  }
+  10% {
+    width: 10%;
+  }
+}
+@keyframes loadingBar {
+  0% {
+    width: 2%;
+    background-position: 0% 50%; /* 그라데이션 시작 */
+  }
+  50% {
+    width: 50%;
+    background-position: 100% 50%; /* 그라데이션을 끝내는 위치 */
+  }
+  100% {
+    width: 100%;
+    background-position: 0% 50%; /* 다시 시작 지점으로 돌아옴 */
+  }
+}
+
+/* 버튼 스타일링 */
+#voice-input {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  /* 화면 중앙에 배치 */
+  position: absolute;
+  top: 50%; /* 화면의 세로 중앙 */
+  left: 50%; /* 화면의 가로 중앙 */
+  transform: translate(-50%, -50%); /* 정확한 중앙 정렬을 위해 이동 */
+}
+
+#voice-input img {
+  width: 550px; /* 이미지 크기 조정 */
+  height: 550px;
+  transition: transform 0.3s ease-in-out; /* 부드럽게 크기가 변하도록 추가 */
+}
+
+/* 음성 인식 중에 활성화되는 애니메이션 */
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.active img {
+  animation: pulse 1s infinite; /* 음성 인식 중에 1초마다 확장되는 애니메이션 */
+  transform: scale(1.2); /* 음성 인식 중 이미지 크기 확대 */
+}
+
+#change-character-btn,
+#end-button {
+  background-color: #ffffff;
+  color: #333;
+  font-size: 20px;
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: none;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  font-weight: 600;
+}
+
+.exit-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #4f79a7;
+  color: white;
+  padding: 20px 30px;
+  border-radius: 16px;
+  font-size: 20px;
+  z-index: 9999;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  animation: fadeInUp 0.3s ease;
+}
+
+@keyframes fadeInUp {
+  0% {
+    transform: translate(-50%, -60%);
+    opacity: 0;
+  }
+  100% {
+    transform: translate(-50%, -50%);
+    opacity: 1;
+  }
+}
+
+.dim-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.7); /* 반투명 회색/검정 느낌 */
+  z-index: 9998; /* 팝업 바로 아래 */
+}
+
+#change-character-btn:hover {
+  background-color: #d6eaff;
+}
+
+#character-selection {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  background: rgba(255, 255, 255, 0.95);
+  padding: 20px 30px;
+  border-radius: 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  z-index: 20;
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+#character-selection p {
+  font-size: 22px;
+  font-weight: 500;
+  margin: 0 0 10px 0;
+  text-align: center;
+  color: #333;
+}
+
+#character-selection button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: transform 0.2s ease;
+}
+
+#character-selection button:hover {
+  transform: scale(1.1);
+}
+
+#character-selection img {
+  width: 150px;
+  height: 150px;
+  border-radius: 15px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.fade-out {
+  opacity: 0;
+  transform: translateY(-20px);
+  pointer-events: none;
+}
+
+.fade-in {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+@media (max-width: 1080px) {
+  #chat-container {
+    width: 1080px;
+    height: 810px;
+  }
+}
+
+@media (min-width: 1206px) {
+  #top-message {
+    font-size: 36px;
+  }
+
+  .nav-buttons {
+    transform: scale(1.2);
+    margin-right: 30px;
+  }
+
+  #chat-container {
+    width: 100%;
+    height: 100%;
+    transform: scale(1.5);
+  }
+}
