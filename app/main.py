@@ -30,12 +30,15 @@ import time
 import requests
 from flask import request, jsonify
 
-TYPECAST_API_TOKEN = "__pltSGqnFKLQZckBcR8CMLPmkL4f24iKhiwBKXxhvXLW"
+TYPECAST_API_KEY = "__pltVDgHGsY6Zf9Kr5VJQboHrvMWuCUZu2VY5oadbof9"
+
 TYPECAST_HEADERS = {
-    "Authorization": f"Bearer {TYPECAST_API_TOKEN}",
+    "X-API-KEY": TYPECAST_API_KEY,
     "Content-Type": "application/json"
+
 }
-ACTOR_ID = "619d7f42c14fccfc4953e159"
+
+VOICE_ID = "tc_619d7f42c14fccfc4953e159"
 
 
 @app.route('/manifest.json')
@@ -57,39 +60,29 @@ def get_tts():
 
     try:
         # 1. 음성 생성 요청
-        speak_res = requests.post("https://typecast.ai/api/speak", headers=TYPECAST_HEADERS, json={
+        speak_res = requests.post(
+        "https://api.typecast.ai/v1/text-to-speech",
+        headers=TYPECAST_HEADERS,
+
+        json={
+            "voice_id": VOICE_ID,
             "text": text,
-            "lang": "auto",
-            "actor_id": ACTOR_ID,
-            "xapi_hd": True,
-            "model_version": "latest",
-            "xapi_audio_format": "mp3",  # mp3로 명시
-            "max_seconds": 60
-        })
+            "model": "ssfm-v30",
+            "language": "kor",
+            "output": {
+                "audio_format": "mp3"
+            }
+        }
+)
         speak_res.raise_for_status()
-        speak_url = speak_res.json()["result"]["speak_v2_url"]
 
-        # 2. 음성 생성 상태 polling
-        audio_url = None
-        for _ in range(30):
-            poll_res = requests.get(speak_url, headers=TYPECAST_HEADERS)
-            poll_res.raise_for_status()
-            result = poll_res.json()["result"]
-            if result["status"] == "done":
-                audio_url = result["audio_download_url"]
-                break
-            time.sleep(1)
+        audio_data = BytesIO(speak_res.content)
 
-        if not audio_url:
-            return jsonify({"error": "음성 생성 실패 (타임아웃)"}), 500
-
-        # 3. 음성 파일 다운로드 → 메모리로 처리
-        audio_res = requests.get(audio_url)
-        audio_res.raise_for_status()
-        audio_data = BytesIO(audio_res.content)
-
-        # 4. 클라이언트로 mp3 스트리밍
-        return send_file(audio_data, mimetype="audio/mpeg")
+        return send_file(
+            audio_data,
+            mimetype="audio/mpeg",
+            download_name="tts.mp3"
+        )
 
     except Exception as e:
         print("TTS 생성 중 오류 발생:", e)

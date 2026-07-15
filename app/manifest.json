@@ -3,7 +3,7 @@
   "short_name": "톡톡챗봇연구소",
   "start_url": "/index.html",
   "scope": "/",
-  "display": "standalone",
+  "display": "fullscreen",
   "background_color": "#ffffff",
   "theme_color": "#000000",
   "description": "챗봇 연구소에서 자신만의 챗봇을 만들어보세요.",
