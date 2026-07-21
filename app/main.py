@@ -14,8 +14,8 @@ app.secret_key = "secret-key"
 # Ollama API 주소
 OLLAMA_URL = "http://localhost:11434/api/generate"
 
-MODEL_NAME1 = "eeve-model-light:latest"
-MODEL_NAME2 = "llama3:latest"
+MODEL_NAME1 = "kanana-model2:latest"
+MODEL_NAME2 = "kanana-model2:latest"
 
 # OpenWeatherMap API 정보
 WEATHER_API_KEY = "2dc3123de16c3df61202dc8b4f9b0277"

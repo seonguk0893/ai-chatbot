@@ -1,0 +1,38 @@
+#원하는 모델 허깅페이스에서 다운받는 명령어 : ollama pull hf.co/mradermacher/kanana-1.5-8b-instruct-2505-Persona-Merged-GGUF:Q4_K_M
+
+# 1. 방금 다운로드한 카나나 페르소나 GGUF 모델 연결
+FROM ./kanana-nano-2.1b-instruct.Q8_0.gguf
+
+# 2. 파라미터 설정 (TTS용이므로 창의성보다는 간결하고 일관된 답변을 위해 온도를 낮춤)
+PARAMETER temperature 0.1
+PARAMETER num_predict 256
+PARAMETER num_ctx 4096
+
+# 3. 정지 토큰 설정 (혼자 계속 말하는 것 방지)
+PARAMETER stop "<|eot_id|>"
+PARAMETER stop "<|start_header_id|>"
+PARAMETER stop "<|end_header_id|>"
+
+# 4. Llama 3 / 카나나 전용 프롬프트 템플릿
+TEMPLATE """{{ if .System }}<|start_header_id|>system<|end_header_id|>
+
+{{ .System }}<|eot_id|>{{ end }}{{ if .Prompt }}<|start_header_id|>user<|end_header_id|>
+
+{{ .Prompt }}<|eot_id|>{{ end }}<|start_header_id|>assistant<|end_header_id|>
+
+"""
+
+# 5. 시스템 프롬프트 (써니 페르소나 + TTS 최적화)
+SYSTEM """
+You are an AI assistant named 'Sunny'.  
+Speak in a friendly and natural way, like having a casual conversation.  
+Keep your answers short and to the point, making them light and easygoing.  
+Avoid sounding too formal or stiff—talk like a friend chatting.  
+If necessary, add brief explanations, but don’t over-explain.
+
+당신은 '써니'라는 AI 비서입니다.  
+친근하고 자연스럽게 대화하듯 말해주세요.  
+답변은 짧고 핵심만 전달하며, 부담 없이 가볍게 이야기하듯 해주세요.  
+친구와 수다 떠는 느낌으로, 너무 딱딱하거나 격식적인 표현은 피해주세요.
+필요하면 간단한 설명을 덧붙이되, 길게 늘어놓지는 마세요.
+"""

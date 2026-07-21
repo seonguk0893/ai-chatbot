@@ -42,9 +42,8 @@ function showCharacterSelection() {
 
 window.addEventListener("DOMContentLoaded", () => {
   const selected = localStorage.getItem("selectedCharacter") || 1;
-  document.getElementById(
-    "character-img"
-  ).src = `static/images/character${selected}.png`;
+  document.getElementById("character-img").src =
+    `static/images/character${selected}.png`;
 });
 
 const OLLAMA_API_URL = "/send_message";
@@ -56,8 +55,9 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 // 음성 인식 함수
-const recognition = new (window.SpeechRecognition ||
-  window.webkitSpeechRecognition)();
+const recognition = new (
+  window.SpeechRecognition || window.webkitSpeechRecognition
+)();
 recognition.lang = "ko-KR";
 
 recognition.onresult = function (event) {
@@ -149,7 +149,7 @@ document.addEventListener(
       ttsAudio.play().catch(() => {});
     }
   },
-  { once: true }
+  { once: true },
 );
 
 function playTTS(text) {
@@ -170,7 +170,7 @@ function playTTS(text) {
   let cleanedText = text.replace(
     /(\d+)\s*[-~]\s*(\d+)\s*(kg|g|km|m|cm|mm|ml|l|℃|°C|%|인치|도)?/g,
     (_, from, to, unit) =>
-      `${from}에서 ${to}${unitMap[unit] ? " " + unitMap[unit] : unit || ""}`
+      `${from}에서 ${to}${unitMap[unit] ? " " + unitMap[unit] : unit || ""}`,
   );
 
   cleanedText = cleanedText
